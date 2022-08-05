@@ -1,14 +1,9 @@
 import "./App.css";
 // importing components from react-router-dom package
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import React from "react";
 import MainApp from "./MainApp";
-import CsvReader from "./CsvReader";
+import SetupPage from "./SetupPage";
 
 function App() {
   const [userData, setUserData] = React.useState(new Map());
@@ -22,7 +17,7 @@ function App() {
         <Route
           exact
           path="/"
-          element={<CsvReader setUserData={setUserData} />}
+          element={<SetupPage setUserData={setUserData} />}
         />
         <Route path="/main" element={<MainApp userData={userData} />} />
       </Routes>

@@ -1,7 +1,7 @@
 import React from "react";
 import { useCSVReader } from "react-papaparse";
 
-import { Routes, Route, useNavigate, Switch } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const styles = {
   csvReader: {
@@ -28,7 +28,7 @@ const styles = {
   },
 };
 
-function CsvReader(props) {
+const CsvReader = (props) => {
   const [userData, setUserData] = React.useState(new Map());
 
   const { CSVReader } = useCSVReader();
@@ -112,6 +112,6 @@ function CsvReader(props) {
       )}
     </CSVReader>
   );
-}
+};
 
 export default CsvReader;

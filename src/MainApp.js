@@ -64,8 +64,8 @@ const MainApp = (props) => {
   console.log(data);
   return (
     <Container maxWidth="lg">
-      <Typography variant="h3" component="h2" textAlign="center">
-        Welcome to Time off Calculator!
+      <Typography variant="h3" component="h3" textAlign="center">
+        Time off Calculator
       </Typography>
 
       <Typography variant="h5" component="h2" textAlign="center" marginTop={2}>
