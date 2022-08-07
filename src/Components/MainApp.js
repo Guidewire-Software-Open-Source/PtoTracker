@@ -11,7 +11,6 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Link } from "react-router-dom";
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
-import { bereavement, sickdays, target_pto } from "./properties";
 
 const MainApp = (props) => {
   const [data, setData] = React.useState();
@@ -22,9 +21,9 @@ const MainApp = (props) => {
 
   const calculateAvg = () => {
     const NUM_QUARTER = 4;
-    setPTOPerQuarter(target_pto / NUM_QUARTER);
-    setSickPerQuarter(sickdays / NUM_QUARTER);
-    setBereavementPerQuarter(bereavement / NUM_QUARTER);
+    setPTOPerQuarter(props.preferences.targetPTO / NUM_QUARTER);
+    setSickPerQuarter(props.preferences.sickDays / NUM_QUARTER);
+    setBereavementPerQuarter(props.preferences.bereavement / NUM_QUARTER);
   };
 
   // return true for red, false for green

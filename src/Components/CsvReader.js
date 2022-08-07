@@ -1,8 +1,6 @@
 import React from "react";
 import { useCSVReader } from "react-papaparse";
 
-import { useNavigate } from "react-router-dom";
-
 const styles = {
   csvReader: {
     display: "flex",
@@ -29,11 +27,11 @@ const styles = {
 };
 
 const CsvReader = (props) => {
+  if (!props.preferences) return null;
+
   const [userData, setUserData] = React.useState(new Map());
 
   const { CSVReader } = useCSVReader();
-
-  let navigate = useNavigate();
 
   // get the quarter based on date
   const getQuarter = (dateStr) => {
@@ -41,11 +39,30 @@ const CsvReader = (props) => {
     return Math.floor(date.getMonth() / 3 + 1);
   };
 
+  // check if date is after the selected start date
+  const checkDate = (dateStr) => {
+    const startDate = new Date(props.preferences.startDate);
+    // for testing purposes
+    const date = new Date(dateStr);
+    // check if the given date is after today
+    const day = startDate.getDate();
+    const month = startDate.getMonth();
+    const year = startDate.getFullYear();
+    return (
+      date.getDate() >= day &&
+      date.getMonth() >= month &&
+      date.getFullYear() >= year
+    );
+  };
+
   // to process the result
   const processResult = (result) => {
     for (let i = 1; i < result.length; i++) {
       const username = result[i][0];
       const type = result[i][2];
+      // check if the date falls within our start date - current date
+      // if not skip this date
+      if (!checkDate(result[i][1])) continue;
       const quarter = getQuarter(result[i][1]);
       // use for array
       const quarterIndex = quarter - 1;
@@ -80,18 +97,15 @@ const CsvReader = (props) => {
         setUserData((map) => new Map(map.set(username, newData)));
       }
     }
-
+    console.log(userData);
     props.setUserData(userData);
   };
 
   return (
     <CSVReader
-      onUploadAccepted={(results) => {
-        console.log("---------------------------");
-        console.log(results);
-        console.log("---------------------------");
-        processResult(results.data);
-        navigate("/main", { replace: true });
+      onUploadAccepted={(result) => {
+        console.log("result: ", result);
+        processResult(result.data);
       }}
     >
       {({ getRootProps, acceptedFile, ProgressBar, getRemoveFileProps }) => (
