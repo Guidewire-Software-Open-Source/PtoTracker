@@ -12,6 +12,7 @@ function App() {
     sickDays: 10,
     bereavement: 5,
   });
+
   return (
     <>
       {/* This is the alias of BrowserRouter i.e. Router */}

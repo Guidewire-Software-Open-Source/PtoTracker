@@ -1,14 +1,18 @@
 import React from "react";
-import { Typography, TextField, Grid } from "@mui/material";
+import { Typography, TextField, Grid, Button } from "@mui/material";
 
 const Preferences = (props) => {
+  const save = () => {
+    props.setPreferences("abc");
+  };
   return (
     <>
       <Typography variant="h5" component="h2" textAlign="center" marginTop={1}>
         Preferences
       </Typography>
       <Typography variant="subtitle2" textAlign="center">
-        You can leave this at default.
+        You can leave this at default. Preferences will not be saved until you
+        click on the "Save" button.
       </Typography>
       <Grid
         container
@@ -37,7 +41,7 @@ const Preferences = (props) => {
             inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
           />
         </Grid>
-        <Grid item xs={12} md={2}>
+        <Grid item xs={12} md={3}>
           <TextField
             fullWidth
             id="sickDays"
@@ -57,6 +61,13 @@ const Preferences = (props) => {
           />
         </Grid>
       </Grid>
+      <Button
+        variant="contained"
+        sx={{ marginTop: "2vh" }}
+        onClick={() => save()}
+      >
+        Save
+      </Button>
     </>
   );
 };
