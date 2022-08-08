@@ -3,14 +3,15 @@ import { Routes, Route } from "react-router-dom";
 import React from "react";
 import MainApp from "./Components/MainApp";
 import SetupPage from "./Components/SetupPage";
+import moment from "moment";
 
 function App() {
   const [userData, setUserData] = React.useState(new Map());
   const [preferences, setPreferences] = React.useState({
-    startDate: "2022-01-01",
+    startDate: moment().format("YYYY-MM-DD").toString(),
     targetPTO: 22,
     sickDays: 10,
-    bereavement: 5,
+    bereavement: 2,
   });
 
   return (
