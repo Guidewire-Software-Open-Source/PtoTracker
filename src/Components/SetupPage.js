@@ -6,6 +6,7 @@ import { Typography, Box, Button } from "@mui/material";
 import { Container } from "@mui/system";
 import Preferences from "./Preferences";
 import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 const SetupPage = (props) => {
   const [rawResult, setRawResult] = React.useState([]);
@@ -13,26 +14,17 @@ const SetupPage = (props) => {
 
   let navigate = useNavigate();
 
-  // get the quarter based on date
-  const getQuarter = (dateStr) => {
-    const date = new Date(dateStr);
-    return Math.floor(date.getMonth() / 3 + 1);
-  };
-
   // check if date is after the selected start date
   const checkDate = (dateStr) => {
-    const startDate = new Date(props.preferences.startDate);
-    // for testing purposes
-    const date = new Date(dateStr);
+    const startDate = moment(props.preferences.startDate);
+    console.log(startDate);
+    // parse date
+    const date = moment(dateStr);
     // check if the given date is after today
-    const day = startDate.getDate();
-    const month = startDate.getMonth();
-    const year = startDate.getFullYear();
-    return (
-      date.getDate() >= day &&
-      date.getMonth() >= month &&
-      date.getFullYear() >= year
-    );
+    const day = startDate.date();
+    const month = startDate.month();
+    const year = startDate.year();
+    return date.date() >= day && date.month() >= month && date.year() >= year;
   };
 
   // to process the result
@@ -45,7 +37,7 @@ const SetupPage = (props) => {
       // check if the date falls within our start date - current date
       // if not skip this date
       if (!checkDate(result[i][1])) continue;
-      const quarter = getQuarter(result[i][1]);
+      const quarter = moment(result[i][1]).quarter();
       // use for array
       const quarterIndex = quarter - 1;
       let newData = {};
@@ -90,6 +82,7 @@ const SetupPage = (props) => {
   // }, [rawResult]);
 
   console.log("user data from outside: ", userData);
+  console.log("preference:", props.preferences);
 
   const submit = () => {
     processResult();
@@ -105,12 +98,14 @@ const SetupPage = (props) => {
       }}
     >
       <Typography variant="h4" component="h2" textAlign="center" marginTop={4}>
-        Welcome to Time off Calculator!
+        Time off Calculator
       </Typography>
-      <Typography variant="subtitle1" textAlign="center" marginTop={4}>
+
+      <Typography variant="subtitle2" textAlign="center" marginTop={4}>
         Please upload your CSV file to continue. For the CSV file format, please
         refer to the README file.
       </Typography>
+
       <Container maxWidth="md">
         <Box
           sx={{

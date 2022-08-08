@@ -9,7 +9,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
 
 const MainApp = (props) => {
@@ -302,7 +302,7 @@ const MainApp = (props) => {
 
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Button
-          sx={{ marginTop: 2 }}
+          sx={{ marginTop: 1, marginBottom: 1 }}
           variant="contained"
           onClick={() => {
             props.setUserData(new Map());

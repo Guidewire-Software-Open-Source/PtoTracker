@@ -13,8 +13,6 @@ function App() {
     bereavement: 5,
   });
 
-  console.log("user data from app.js:", userData);
-
   return (
     <>
       {/* This is the alias of BrowserRouter i.e. Router */}

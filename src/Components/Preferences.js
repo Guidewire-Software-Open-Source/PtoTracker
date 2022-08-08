@@ -3,6 +3,7 @@ import { Typography, TextField, Grid, Button } from "@mui/material";
 
 const Preferences = (props) => {
   if (!props.preferences) return null;
+
   // const save = () => {
   //   // props.setPreferences("abc");
   //   props.processResult();
@@ -24,42 +25,68 @@ const Preferences = (props) => {
           maxWidth: "60vw",
         }}
       >
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={12}>
           <TextField
             id="date"
             label="Start Date"
             type="date"
-            defaultValue={new Date(props.preferences.startDate)}
+            value={props.preferences.startDate}
+            onInput={(event) => {
+              props.setPreferences({
+                ...props.preferences,
+                startDate: event.target.value,
+              });
+            }}
             fullWidth
           />
         </Grid>
-        <Grid item xs={12} md={2}>
+        <Grid item xs={12} md={4}>
           <TextField
             fullWidth
             id="targetPTO"
             label="Target PTO"
             variant="outlined"
             autoComplete="off"
-            defaultValue={props.preferences.targetPTO}
+            value={props.preferences.targetPTO}
+            onInput={(event) => {
+              props.setPreferences({
+                ...props.preferences,
+                targetPTO: event.target.value,
+              });
+            }}
             inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
           />
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={4}>
           <TextField
             fullWidth
             id="sickDays"
             label="Target Sick Days"
             variant="outlined"
             autoComplete="off"
+            value={props.preferences.sickDays}
+            onInput={(event) => {
+              props.setPreferences({
+                ...props.preferences,
+                sickDays: event.target.value,
+              });
+            }}
             inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
           />
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={4}>
           <TextField
             id="bereavement"
             fullWidth
             label="Target Bereavement"
             variant="outlined"
+            value={props.preferences.bereavement}
+            onInput={(event) => {
+              props.setPreferences({
+                ...props.preferences,
+                bereavement: event.target.value,
+              });
+            }}
             inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
           />
         </Grid>
