@@ -7,6 +7,7 @@ import { Container } from "@mui/system";
 import Preferences from "./Preferences";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
+import Test from "./test";
 
 const SetupPage = (props) => {
   const [rawResult, setRawResult] = React.useState([]);
@@ -14,10 +15,13 @@ const SetupPage = (props) => {
 
   let navigate = useNavigate();
 
+  const updateMap = (key, value) => {
+    setUserData((map) => new Map(map.set(key, value)));
+  };
+
   // check if date is after the selected start date
   const checkDate = (dateStr) => {
     const startDate = moment(props.preferences.startDate);
-    console.log(startDate);
     // parse date
     const date = moment(dateStr);
     // check if the given date is after today
@@ -36,7 +40,7 @@ const SetupPage = (props) => {
       const type = result[i][2];
       // check if the date falls within our start date - current date
       // if not skip this date
-      if (!checkDate(result[i][1])) continue;
+      if (!checkDate(result[i][1]) || !result[i][1]) continue;
       const quarter = moment(result[i][1]).quarter();
       // use for array
       const quarterIndex = quarter - 1;
@@ -56,8 +60,8 @@ const SetupPage = (props) => {
         } else {
           newData.Bereavement[quarterIndex]++;
         }
-
-        setUserData((map) => new Map(map.set(username, newData)));
+        updateMap(username, newData);
+        // setUserData((map) => new Map(map.set(username, newData)));
       } else {
         // retrieve the existing data
         newData = userData.get(username);
@@ -68,10 +72,11 @@ const SetupPage = (props) => {
         } else {
           newData.Bereavement[quarterIndex]++;
         }
-        setUserData((map) => new Map(map.set(username, newData)));
+        updateMap(username, newData);
+        // setUserData((map) => new Map(map.set(username, newData)));
       }
     }
-    props.setUserData(userData);
+    // props.setUserData(new Map(userData));
   };
 
   // this effect process the result every time the preferences change
@@ -81,13 +86,21 @@ const SetupPage = (props) => {
   //   processResult(rawResult);
   // }, [rawResult]);
 
-  console.log("user data from outside: ", userData);
-  console.log("preference:", props.preferences);
+  // console.log("user data from outside: ", userData);
+  // console.log("preference:", props.preferences);
 
   const submit = () => {
     processResult();
     navigate("/main", { replace: true });
   };
+
+  // delete from this line, for testing only
+  const [map, setMap] = React.useState();
+
+  const updateMap2 = (key, value) => {
+    setMap((map) => new Map(map.set(key, value)));
+  };
+  // delete till here
 
   return (
     <Box
@@ -134,6 +147,7 @@ const SetupPage = (props) => {
       >
         Let's Go
       </Button>
+      {/* <Test /> */}
     </Box>
   );
 };

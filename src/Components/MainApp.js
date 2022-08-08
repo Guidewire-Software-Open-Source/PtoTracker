@@ -10,11 +10,10 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
-import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
+import Graph from "./Graph";
 
 const MainApp = (props) => {
   const [data, setData] = React.useState();
-  const [chartData, setChartData] = React.useState([]);
   const [PTOPerQuarter, setPTOPerQuarter] = React.useState();
   const [sickPerQuarter, setSickPerQuarter] = React.useState();
   const [bereavementPerQuarter, setBereavementPerQuarter] = React.useState();
@@ -47,11 +46,8 @@ const MainApp = (props) => {
     return false;
   };
 
-  const createDataForChart = () => {};
-
   React.useEffect(() => {
     calculateAvg();
-    createDataForChart();
     setData(
       Array.from(props.userData, ([key, value]) => ({
         key,
@@ -62,7 +58,6 @@ const MainApp = (props) => {
 
   if (!data) return null;
 
-  console.log(data);
   return (
     <Container maxWidth="lg">
       <Typography variant="h3" component="h3" textAlign="center">
@@ -90,18 +85,6 @@ const MainApp = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {/* {rows.map((row, i) => (
-                <TableRow
-                  key={i}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell>1</TableCell>
-                  <TableCell>{row.username}</TableCell>
-                  <TableCell align="right">{row.pto}</TableCell>
-                  <TableCell align="right">{row.sickDays}</TableCell>
-                  <TableCell align="right">{row.bereavement}</TableCell>
-                </TableRow>
-              ))} */}
               {data.map((row, i) => (
                 <Fragment key={i}>
                   <TableRow>
@@ -285,20 +268,7 @@ const MainApp = (props) => {
         Graph
       </Typography>
 
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          marginTop: "5px",
-        }}
-      >
-        <LineChart width={600} height={300} data={data}>
-          <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-          <CartesianGrid stroke="#ccc" />
-          <XAxis dataKey="name" />
-          <YAxis />
-        </LineChart>
-      </Box>
+      {/* <Graph /> */}
 
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <Button

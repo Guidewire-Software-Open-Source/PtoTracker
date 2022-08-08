@@ -104,6 +104,7 @@ const CsvReader = (props) => {
   return (
     <CSVReader
       onUploadAccepted={(result) => {
+        console.log("raw data:", result);
         props.setRawResult(result.data);
       }}
     >
