@@ -14,6 +14,11 @@ function App() {
     bereavement: 2,
   });
 
+  React.useEffect(() => {
+    console.log("user data changing:", userData);
+  }, [userData]);
+
+  console.log("user data :", userData);
   return (
     <>
       {/* This is the alias of BrowserRouter i.e. Router */}
@@ -26,6 +31,7 @@ function App() {
           path="/"
           element={
             <SetupPage
+              userData={userData}
               setUserData={setUserData}
               preferences={preferences}
               setPreferences={setPreferences}

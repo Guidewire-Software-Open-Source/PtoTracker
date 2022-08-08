@@ -11,13 +11,12 @@ import Test from "./test";
 
 const SetupPage = (props) => {
   const [rawResult, setRawResult] = React.useState([]);
-  const [userData, setUserData] = React.useState(new Map());
+  // const [userData, setUserData] = React.useState(new Map());
 
   let navigate = useNavigate();
 
-  const updateMap = (key, value) => {
-    setUserData((map) => new Map(map.set(key, value)));
-  };
+  const updateMap = (key, value) =>
+    props.setUserData((map) => new Map(map.set(key, value)));
 
   // check if date is after the selected start date
   const checkDate = (dateStr) => {
@@ -35,6 +34,7 @@ const SetupPage = (props) => {
   const processResult = () => {
     if (!rawResult) return;
     const result = rawResult;
+    const userData = props.userData;
     for (let i = 1; i < result.length; i++) {
       const username = result[i][0];
       const type = result[i][2];
@@ -76,7 +76,6 @@ const SetupPage = (props) => {
         // setUserData((map) => new Map(map.set(username, newData)));
       }
     }
-    // props.setUserData(new Map(userData));
   };
 
   // this effect process the result every time the preferences change
@@ -91,16 +90,8 @@ const SetupPage = (props) => {
 
   const submit = () => {
     processResult();
-    navigate("/main", { replace: true });
+    navigate("/main");
   };
-
-  // delete from this line, for testing only
-  const [map, setMap] = React.useState();
-
-  const updateMap2 = (key, value) => {
-    setMap((map) => new Map(map.set(key, value)));
-  };
-  // delete till here
 
   return (
     <Box
