@@ -7,11 +7,13 @@ import SetupPage from "./Components/SetupPage";
 function App() {
   const [userData, setUserData] = React.useState(new Map());
   const [preferences, setPreferences] = React.useState({
-    startDate: "01/01/2022",
+    startDate: "2022-01-01",
     targetPTO: 22,
     sickDays: 10,
     bereavement: 5,
   });
+
+  console.log("user data from app.js:", userData);
 
   return (
     <>
@@ -33,7 +35,13 @@ function App() {
         />
         <Route
           path="/main"
-          element={<MainApp userData={userData} preferences={preferences} />}
+          element={
+            <MainApp
+              userData={userData}
+              setUserData={setUserData}
+              preferences={preferences}
+            />
+          }
         />
       </Routes>
     </>

@@ -2,17 +2,19 @@ import React from "react";
 import { Typography, TextField, Grid, Button } from "@mui/material";
 
 const Preferences = (props) => {
-  const save = () => {
-    props.setPreferences("abc");
-  };
+  if (!props.preferences) return null;
+  // const save = () => {
+  //   // props.setPreferences("abc");
+  //   props.processResult();
+  // };
   return (
     <>
       <Typography variant="h5" component="h2" textAlign="center" marginTop={1}>
         Preferences
       </Typography>
       <Typography variant="subtitle2" textAlign="center">
-        You can leave this at default. Preferences will not be saved until you
-        click on the "Save" button.
+        You can change the start date of the period, target PTO, sick days and
+        Bereavement.
       </Typography>
       <Grid
         container
@@ -27,7 +29,7 @@ const Preferences = (props) => {
             id="date"
             label="Start Date"
             type="date"
-            defaultValue="2017-05-24"
+            defaultValue={new Date(props.preferences.startDate)}
             fullWidth
           />
         </Grid>
@@ -38,6 +40,7 @@ const Preferences = (props) => {
             label="Target PTO"
             variant="outlined"
             autoComplete="off"
+            defaultValue={props.preferences.targetPTO}
             inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
           />
         </Grid>
@@ -61,13 +64,13 @@ const Preferences = (props) => {
           />
         </Grid>
       </Grid>
-      <Button
+      {/* <Button
         variant="contained"
         sx={{ marginTop: "2vh" }}
         onClick={() => save()}
       >
         Save
-      </Button>
+      </Button> */}
     </>
   );
 };

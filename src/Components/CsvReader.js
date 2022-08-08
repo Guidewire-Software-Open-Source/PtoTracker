@@ -96,14 +96,14 @@ const CsvReader = (props) => {
   //       setUserData((map) => new Map(map.set(username, newData)));
   //     }
   //   }
-  //   console.log(userData);
   //   props.setUserData(userData);
   // };
 
+  // console.log("user data", userData);
+  // console.log("raw result: ", rawResult);
   return (
     <CSVReader
       onUploadAccepted={(result) => {
-        // processResult(result);
         props.setRawResult(result.data);
       }}
     >

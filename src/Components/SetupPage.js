@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 const SetupPage = (props) => {
   const [rawResult, setRawResult] = React.useState([]);
   const [userData, setUserData] = React.useState(new Map());
-  const [startDate, setStartDate] = React.useState("");
 
   let navigate = useNavigate();
 
@@ -21,8 +20,9 @@ const SetupPage = (props) => {
   };
 
   // check if date is after the selected start date
-  const checkDate = (dateStr, startDate) => {
-    if (!dateStr) return;
+  const checkDate = (dateStr) => {
+    const startDate = new Date(props.preferences.startDate);
+    // for testing purposes
     const date = new Date(dateStr);
     // check if the given date is after today
     const day = startDate.getDate();
@@ -36,15 +36,15 @@ const SetupPage = (props) => {
   };
 
   // to process the result
-  const processResult = (result, startDate) => {
-    console.log("inside function: ", startDate, "raw data: ", result);
-    console.log("user data inside:", userData);
+  const processResult = () => {
+    if (!rawResult) return;
+    const result = rawResult;
     for (let i = 1; i < result.length; i++) {
       const username = result[i][0];
       const type = result[i][2];
       // check if the date falls within our start date - current date
       // if not skip this date
-      if (!checkDate(result[i][1], new Date(startDate))) continue;
+      if (!checkDate(result[i][1])) continue;
       const quarter = getQuarter(result[i][1]);
       // use for array
       const quarterIndex = quarter - 1;
@@ -79,26 +79,21 @@ const SetupPage = (props) => {
         setUserData((map) => new Map(map.set(username, newData)));
       }
     }
-    // props.setUserData(userData);
+    props.setUserData(userData);
   };
 
   // this effect process the result every time the preferences change
-  React.useEffect(() => {
-    if (!rawResult || !startDate) return;
-    console.log("data from use effect:", rawResult);
-    processResult(rawResult, startDate);
-    console.log("map: ", userData);
-  }, [rawResult]);
+  // React.useEffect(() => {
+  //   if (!rawResult || !props.preferences) return;
+  //   console.log("raw result:", rawResult);
+  //   processResult(rawResult);
+  // }, [rawResult]);
 
-  // get the start date from parent
-  React.useEffect(() => {
-    if (!props.preferences) return;
-    setStartDate(props.preferences.startDate);
-  }, [props.preferences]);
+  console.log("user data from outside: ", userData);
 
   const submit = () => {
-    console.log("submit called");
-    // navigate("/main", { replace: true });
+    processResult();
+    navigate("/main", { replace: true });
   };
 
   return (
@@ -112,7 +107,6 @@ const SetupPage = (props) => {
       <Typography variant="h4" component="h2" textAlign="center" marginTop={4}>
         Welcome to Time off Calculator!
       </Typography>
-
       <Typography variant="subtitle1" textAlign="center" marginTop={4}>
         Please upload your CSV file to continue. For the CSV file format, please
         refer to the README file.
@@ -125,12 +119,18 @@ const SetupPage = (props) => {
             flexDirection: "column",
           }}
         >
-          <CsvReader setRawResult={setRawResult} />
+          <CsvReader
+            setRawResult={setRawResult}
+            // setUserData={props.setUserData}
+            // processResult={processResult}
+            // preferences={props.preferences}
+          />
         </Box>
       </Container>
       <Preferences
         preferences={props.preferences}
         setPreferences={props.setPreferences}
+        // processResult={processResult}
       />
       <Button
         variant="contained"

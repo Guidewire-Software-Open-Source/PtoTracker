@@ -9,7 +9,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LineChart, Line, CartesianGrid, XAxis, YAxis } from "recharts";
 
 const MainApp = (props) => {
@@ -18,6 +18,8 @@ const MainApp = (props) => {
   const [PTOPerQuarter, setPTOPerQuarter] = React.useState();
   const [sickPerQuarter, setSickPerQuarter] = React.useState();
   const [bereavementPerQuarter, setBereavementPerQuarter] = React.useState();
+
+  let navigate = useNavigate();
 
   const calculateAvg = () => {
     const NUM_QUARTER = 4;
@@ -299,10 +301,15 @@ const MainApp = (props) => {
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "center" }}>
-        <Button sx={{ marginTop: 2 }} variant="contained">
-          <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-            Back to home
-          </Link>
+        <Button
+          sx={{ marginTop: 2 }}
+          variant="contained"
+          onClick={() => {
+            props.setUserData(new Map());
+            navigate("/", { replace: true });
+          }}
+        >
+          Back to home
         </Button>
       </Box>
     </Container>
