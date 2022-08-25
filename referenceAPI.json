@@ -1,0 +1,36 @@
+{
+    "people": [
+        {
+            "NAME": "Person1",
+            "PTO": [
+                1,
+                2,
+                3,
+                4
+            ],
+            "SICK": [
+                3,
+                7,
+                9,
+                0
+            ]
+        },
+        {
+            "NAME": "Person2",
+            "PTO": [
+                1,
+                2,
+                3,
+                4
+            ],
+            "SICK": [
+                3,
+                7,
+                9,
+                0
+            ]
+        }
+    ],
+    "target_quarterly_PTO": 1,
+    "target_quarterly_SICK": 0
+}
