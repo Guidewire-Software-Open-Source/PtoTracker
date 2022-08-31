@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./chart.min.js" defer></script>
+    <script src="./script.js" defer></script>
+    <link rel="stylesheet" href="./styles.css">
+    <title>PTOs</title>
+</head>
+<body>
+    <div id="title">PTO Viewer</div>
+    <div id="wrapper">
+        <div id="inputs">
+            <label for="fileChooser">Choose file:</label>
+            <input type="file" id="fileChooser"/>
+            <label for="start">Start date:</label>
+            <input type="date" name="start" id="start">
+            <label for="pto">PTO (per year):</label>
+            <input type="number" name="pto" id="pto" min="1" max="365">
+            <label for="sick">Sick (per year):</label>
+            <input type="number" name="sick" id="sick" min="1" max="365">
+            <label for="misc">Miscellaneous (per year):</label>
+            <input type="number" name="misc" id="misc" min="1" max="365">
+        </div>
+        <hr/>
+        <table id="people-table">
+        </table>
+        <hr/>
+
+        <div id="current-time">% into current quarter: 0.00%</div>
+        <div id="graph-wrapper">
+            <canvas width="200" height="200" id="graph-canvas-pto"></canvas>
+            <canvas width="200" height="200" id="graph-canvas-sick"></canvas>
+        </div>
+
+    </div>
+
+</body>
+</html>
